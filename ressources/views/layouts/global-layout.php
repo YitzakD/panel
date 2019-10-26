@@ -42,8 +42,13 @@
 
 				<?= $content; ?>
 
-				<a href class="p-chatbox-icon"><i class="far fa-comment-alt"></i></a>
+				<a href class="p-chatbox-icon">
+
 					<span class="badge badge-danger p-global-chatcounter" id="p-global-chatcounter"></span>
+
+					<i class="far fa-comment-alt"></i>
+
+				</a>
 
 			</div>
 
@@ -62,6 +67,8 @@
 			</div>
 
 			<div class="p-sidebar-notebook" id="p-show-notebook"></div>
+
+			<div class="p-sidebar-notebook" id="p-show-tasks"></div>
 			
 		</div>
 
