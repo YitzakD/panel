@@ -6,9 +6,7 @@
 			
 			<li class="nav-item"><a href="#" class="nav-link" id="p-show-sidebar-notebook-toggle"><i class="fas fa-address-book p-nav-content-icon"></i></a></li>
 
-			<!-- <li class="nav-item"><a href="#" class="nav-link" id="p-show-sidebar-tasks-toggle"><i class="fas fa-tasks p-nav-content-icon"></i></a></li> -->
-
-			<!-- <li class="nav-item"><a href="#" class="nav-link" id="p-show-sidebar-tasks-toggle"><i class="fas fa-comment-alt p-nav-content-icon"></i></a></li> -->
+			<li class="nav-item"><a href="#" class="nav-link" id="p-show-sidebar-tasks-toggle"><i class="fas fa-tasks p-nav-content-icon"></i></a></li>
 
 		</ul>
 		
