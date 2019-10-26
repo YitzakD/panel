@@ -84,7 +84,7 @@ if(get_session("uid")) {
 
 			<?php else: ?>
 
-				<span class="d-block bg-light p-4 text-center text-muted">
+				<span class="d-block p-4 text-center text-muted">
 
 					<h5><i class="fas fa-box-open mr-2"></i>Carnet vide!</h5>
 
