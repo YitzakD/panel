@@ -318,7 +318,6 @@
 	ALTER TABLE `uprefs` ADD `sessionmode` ENUM('0','1') NOT NULL AFTER `stylemode`;
 	ALTER TABLE `uprefs` ADD `onlinemode` ENUM('1','0') NOT NULL AFTER `sessionmode`;
 	---
-	###########Last commit 17/10/19
 
 
 
@@ -397,4 +396,17 @@
 	CREATE TABLE `u532250745_panel`.`chat` ( `id` INT NOT NULL AUTO_INCREMENT , `chathash` VARCHAR(12) NOT NULL , `sender` INT NOT NULL , `msg` LONGTEXT NOT NULL , `etat` ENUM('0','1') NOT NULL , `created` DATETIME NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB COMMENT = 'Stock les messages entre utilisateurs';
 
 	/**Modifications #*/
+	---
+
+
+
+
+
+#	tasks   ->		Stock les tâches et les informations sur celles-ci
+	/**Création #*/
+	CREATE TABLE `u532250745_panel`.`tasks` ( `id` INT NOT NULL AUTO_INCREMENT , `starter` INT NOT NULL , `reciever` INT NOT NULL , `task` LONGTEXT NOT NULL , `state` ENUM('initiate','standby','closed') NOT NULL , `created` DATETIME NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB COMMENT = 'Stock les tâches et les informations sur celles-ci';
+
+	/**Modifications #*/
+	ALTER TABLE `tasks` ADD `deadline` DATE NOT NULL AFTER `task`;
+	ALTER TABLE `tasks` CHANGE `state` `state` ENUM('initiate','standby','done','closed') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 	---
