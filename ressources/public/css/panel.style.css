@@ -431,12 +431,6 @@ div > textarea.form-text-elastic { min-height: 5rem; }
     box-shadow: 0px 0px 13px 0px rgba(82, 63, 105, 0.13);
     z-index: 2000
 }
-.p-global-chatcounter {
-	position: fixed;
-	right: 1.8%;
-	bottom: 10%;
-    z-index: 3000
-}
 .p-show-chatbox { display: none; }
 .p-chatbox-icon {
 	position: fixed;
@@ -454,6 +448,13 @@ div > textarea.form-text-elastic { min-height: 5rem; }
 .p-chatbox-icon:hover {
 	background-color: #BE2300;
 	color: #FFFFFF;
+}
+.p-chatbox-icon .p-global-chatcounter {
+	position: absolute;
+	right: 1.8%;
+	bottom: 65%;
+    z-index: 3000;
+    font-size: .83rem!important;
 }
 .chatbox-header {
 	width: 100%;
@@ -665,7 +666,6 @@ div > textarea.form-text-elastic { min-height: 5rem; }
 		font-size: .83rem;
 	}
 }
-
 @media only screen and (max-width: 768px) {
 	.p-chatbox {
 		right: 2%;
@@ -1054,6 +1054,22 @@ div .p-user-notification .p-notification-indicator {
 	outline: none;
 }
 .address-tags-box .address-tag-item:first-child { margin-left: 0!important }
+
+/** Tasks */
+.p-add-task {
+	position: absolute;
+	background-color: #F15624;
+	color: #FFFFFF;
+    width: 45px;
+    height: 45px;
+    padding: .5rem 1rem;
+    bottom: 5%;
+    left: 43%;
+    border-radius: 50%;
+    line-height: 30px;
+    cursor: pointer;
+}
+.p-add-task:hover { background-color: #BE2300; }
 
 /** Dashboard */
 .p-bg-dash { background-color: #E7FFFF!important; }

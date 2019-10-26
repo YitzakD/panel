@@ -81,6 +81,8 @@ $(document).ready(function() {
 
 	psidebarnotebookbutton = $("#p-show-sidebar-notebook-toggle");
 
+	psidebartasksbutton = $("#p-show-sidebar-tasks-toggle");
+
 	poverlay = $(".p-orverlay");
 
 
@@ -215,6 +217,16 @@ $(document).ready(function() {
 		pshownotebookcontenor = $("#p-show-notebook");
 
 		pshownotebookcontenor.addClass("p-show-left-sidebar").animate();
+
+	});
+
+	psidebartasksbutton.click(function(e) {
+
+		e.preventDefault();
+
+		pshowtaskscontenor = $("#p-show-tasks");
+
+		pshowtaskscontenor.addClass("p-show-left-sidebar").animate();
 
 	});
 
@@ -657,6 +669,281 @@ $(document).ready(function() {
 	}
 
     loadcontacts();
+
+
+	/** 
+	*	Tâches
+	*	Charge en continue les taches de l'utilisateur.
+	*/
+
+	pshowtaskscontenor = $("#p-show-tasks");
+
+	function loadtasks() {
+
+		$.get(ajaxlink + 'main/tasks/side-tasks.ajax.php', function(datatasks) {
+
+            pshowtaskscontenor.html(datatasks);
+
+			tasksbox = $(pshowtaskscontenor).find("#p-addressbook");
+
+			tasksbox.niceScroll({cursorcolor:"#EBEDF2", cursorborder:"none",});
+
+            paddtask = $(pshowtaskscontenor).find("div#p-add-task");
+
+            /**	Enregistrer une tâche */
+            function addtask() {
+
+            	$.post(ajaxlink + 'main/tasks/side-createtask.ajax.php', function(createtasks) {
+
+            		pshowtaskscontenor.html(createtasks);
+
+				  	
+            		taskreciever = $(pshowtaskscontenor).find("select#task_reciever");
+
+            		taskdeadline = $(pshowtaskscontenor).find("input#task_deadline");
+
+            		elasticarea = $(pshowtaskscontenor).find("textarea#elasticarea");
+
+				  	elasticarea.elastic().css("height","5.3rem");
+
+				  	jQuery(elasticarea).trigger('update');
+
+            		taskbtn = $(pshowtaskscontenor).find("button#p-add-task-btn");
+
+            		taskerror = $(pshowtaskscontenor).find("div#task-error");
+
+            		function savetask() {
+
+            			taskr = taskreciever.val();
+
+            			taskd = taskdeadline.val();
+
+            			task = elasticarea.val();
+
+            			task = $.trim(task)
+
+            			taskr = $.trim(taskr);
+
+            			taskd = $.trim(taskd);
+
+            			if(taskr!=="" && taskd!=="" && task!=="") {
+
+
+            				$.post(ajaxlink + 'main/tasks/side-savetask.ajax.php', {taskr:taskr, taskd:taskd, task:task}, function(savetask) {
+
+            					if(savetask!=="true") {
+
+            						taskerror.html(savetask).addClass("mb-4");
+
+            					} else {
+
+            						simuload(pshowtaskscontenor, 1000, loadtasks);
+
+            					}
+
+            				});
+
+            			} else {
+
+            				taskerror.html("Vueillez remplir tous les champs").addClass("mb-4");
+
+            			}
+
+
+            		}
+
+            		taskbtn.click(function() {
+
+            			savetask();
+
+            		});
+
+
+					/**	Ferme la sidebar d'enregistrement de tâches */
+					phidetaskformidebarbutton = $(pshowtaskscontenor).find("a#p-hide-tasks-item-toggle");
+
+					phidetaskformidebarbutton.click(function(e) {
+
+						e.preventDefault();
+
+						simuload(pshowtaskscontenor, 100, loadtasks);
+
+					});
+
+            	});
+
+            }
+
+            paddtask.click(function() {
+
+            	simuload(pshowtaskscontenor, 1000, addtask);
+
+            });
+
+            /**	Voire une tâche */
+            pseetask = $(pshowtaskscontenor).find("a#p-task-see-tool");
+
+            pedittask = $(pshowtaskscontenor).find("a#p-task-edit-tool");
+
+            pseetask.click(function(e) {
+
+				e.preventDefault();
+
+				taskid = $(this).attr("accesskey");
+
+            	function seetask() {
+
+	            	$.post(ajaxlink + 'main/tasks/side-seetask.ajax.php', {taskid:taskid}, function(seetaskdata) {
+
+	            		pshowtaskscontenor.html(seetaskdata);
+
+						/**	Ferme la sidebar de la tâche sélectionner */
+						phidetaskboardidebarbutton = $(pshowtaskscontenor).find("a#p-hide-task-board-sidebar-toggle");
+
+						phidetaskboardidebarbutton.click(function(e) {
+
+							e.preventDefault();
+
+							loadtasks();
+
+						});
+
+	        		});
+
+            	}
+
+            	simuload(pshowtaskscontenor, 1000, seetask);
+
+            });
+
+
+            /**	Modifier une tâche */
+            pedittask.click(function(e) {
+
+				e.preventDefault();
+
+				taskid = $(this).attr("accesskey");
+
+            	simuload(pshowtaskscontenor, 1000, edittask);
+	            function edittask() {
+
+	            	$.post(ajaxlink + 'main/tasks/side-upformtask.ajax.php', {taskid:taskid}, function(upformtasks) {
+
+	            		pshowtaskscontenor.html(upformtasks);
+
+
+	            		taskdeadline = $(pshowtaskscontenor).find("input#up_task_deadline");
+
+	            		elasticarea = $(pshowtaskscontenor).find("textarea#elasticarea");
+
+					  	elasticarea.elastic().css("height","5.3rem");
+
+					  	jQuery(elasticarea).trigger('update');
+
+	            		edittaskbtn = $(pshowtaskscontenor).find("button#p-edit-task-btn");
+
+	            		taskerror = $(pshowtaskscontenor).find("div#task-error");
+
+	            		function updatetask() {
+
+	            			taskd = taskdeadline.val();
+
+	            			task = elasticarea.val();
+
+	            			task = $.trim(task)
+
+	            			taskd = $.trim(taskd);
+
+	            			if(taskd!=="" && task!=="") {
+
+
+	            				$.post(ajaxlink + 'main/tasks/side-updatetask.ajax.php', {taskd:taskd, task:task, taskid:taskid}, function(updatetaskdata) {
+
+	            					if(updatetaskdata!=="true") {
+
+	            						taskerror.html(updatetask).addClass("mb-4");
+
+	            					} else {
+
+	            						simuload(pshowtaskscontenor, 1000, loadtasks);
+
+	            					}
+
+	            				});
+
+	            			} else {
+
+	            				taskerror.html("Vueillez remplir tous les champs").addClass("mb-4");
+
+	            			}
+
+
+	            		}
+
+	            		edittaskbtn.click(function() {
+
+	            			updatetask();
+
+	            			simuload(pshowtaskscontenor, 1000, loadtasks);
+
+	            		});
+
+
+						/**	Ferme la sidebar d'enregistrement de tâches */
+						phidetaskformidebarbutton = $(pshowtaskscontenor).find("a#p-hide-tasks-item-toggle");
+
+						phidetaskformidebarbutton.click(function(e) {
+
+							e.preventDefault();
+
+							simuload(pshowtaskscontenor, 100, loadtasks);
+
+						});
+
+	            	});
+
+	            }
+
+            });
+
+
+			/**	Changement de statut */
+            pstatetask = $(pshowtaskscontenor).find("a#p-task-state-change");
+
+            pstatetask.click(function(e) {
+
+				e.preventDefault();
+
+				taskid = $(this).attr("accesskey");
+
+            	function changetaskstate() {
+
+	            	$.post(ajaxlink + 'main/tasks/side-changetask.ajax.php', {taskid:taskid}, function() {});
+
+            	}
+
+            	changetaskstate();
+
+            	simuload(pshowtaskscontenor, 1000, loadtasks);
+
+            });
+
+			/*	Ferme la sidebar de Tâches */
+			phidetaskksidebarbutton = $(pshowtaskscontenor).find("a#p-hide-tasks-sidebar-toggle");
+
+			phidetaskksidebarbutton.click(function(e) {
+
+				e.preventDefault();
+
+				pshowtaskscontenor.removeClass("p-show-left-sidebar").animate();
+
+			});
+
+        });
+
+	}
+
+	loadtasks();
 
 
 	/** 

@@ -447,12 +447,6 @@ div > textarea.form-text-elastic { min-height: 5rem; }
     box-shadow: 0px 0px 13px 0px rgba(36, 43, 51, 0.05);
     z-index: 2000
 }
-.p-global-chatcounter {
-	position: fixed;
-	right: 1.8%;
-	bottom: 10%;
-    z-index: 3000
-}
 .p-show-chatbox { display: none; }
 .p-chatbox-icon {
 	position: fixed;
@@ -470,6 +464,13 @@ div > textarea.form-text-elastic { min-height: 5rem; }
 .p-chatbox-icon:hover {
 	background-color: #068217;
 	color: #FFFFFF;
+}
+.p-chatbox-icon .p-global-chatcounter {
+	position: absolute;
+	right: 1.8%;
+	bottom: 65%;
+    z-index: 3000;
+    font-size: .83rem!important;
 }
 .chatbox-header {
 	width: 100%;
@@ -1081,6 +1082,23 @@ div .p-user-notification .p-notification-indicator {
     color: #B2B3B3;
 }
 .address-tags-box .address-tag-item:first-child { margin-left: 0!important }
+
+/** Tasks */
+.p-add-task {
+	position: absolute;
+	background-color: #39B54A;
+	color: #FFFFFF;
+    width: 45px;
+    height: 45px;
+    padding: .5rem 1rem;
+    bottom: 5%;
+    left: 43%;
+    border-radius: 50%;
+    line-height: 30px;
+    cursor: pointer;
+}
+.p-add-task:hover { background-color: #068217; }
+
 
 /** Dashboard */
 .p-bg-dash { background-color: #3B454F!important; }
